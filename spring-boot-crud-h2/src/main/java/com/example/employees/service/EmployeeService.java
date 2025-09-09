@@ -1,6 +1,6 @@
 package com.example.employees.service;
 
-import com.example.employees.model.Employee;
+import com.example.employees.model.EmployeeResponse;
 import com.example.employees.repository.EmployeeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,24 +17,24 @@ public class EmployeeService {
         this.repository = repository;
     }
 
-    public List<Employee> findAll() {
+    public List<EmployeeResponse> findAll() {
         return repository.findAll();
     }
 
-    public Employee findById(Long id) {
+    public EmployeeResponse findById(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
     }
 
-    public Employee create(Employee employee) {
+    public EmployeeResponse create(EmployeeResponse employee) {
         repository.findByEmail(employee.getEmail()).ifPresent(e -> {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
         });
         return repository.save(employee);
     }
 
-    public Employee update(Long id, Employee data) {
-        Employee existing = findById(id);
+    public EmployeeResponse update(Long id, EmployeeResponse data) {
+        EmployeeResponse existing = findById(id);
         existing.setName(data.getName());
         existing.setEmail(data.getEmail());
         existing.setRole(data.getRole());
@@ -42,7 +42,7 @@ public class EmployeeService {
     }
 
     public void delete(Long id) {
-        Employee existing = findById(id);
+        EmployeeResponse existing = findById(id);
         repository.delete(existing);
     }
 }

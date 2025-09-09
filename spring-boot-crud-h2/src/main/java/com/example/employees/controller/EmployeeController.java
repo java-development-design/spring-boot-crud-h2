@@ -1,6 +1,6 @@
 package com.example.employees.controller;
 
-import com.example.employees.model.Employee;
+import com.example.employees.model.EmployeeResponse;
 import com.example.employees.service.EmployeeService;
 import com.example.employees.model.EmployeeRequest;
 import jakarta.validation.Valid;
@@ -22,18 +22,18 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<Employee> all() {
+    public List<EmployeeResponse> all() {
         return service.findAll();
     }
 
     @GetMapping("/{id}")
-    public Employee byId(@PathVariable Long id) {
+    public EmployeeResponse byId(@PathVariable Long id) {
         return service.findById(id);
     }
 
     @PostMapping
-    public ResponseEntity<Employee> create(@Valid @RequestBody EmployeeRequest req) {
-        Employee saved = service.create(Employee.builder()
+    public ResponseEntity<EmployeeResponse> create(@Valid @RequestBody EmployeeRequest req) {
+        EmployeeResponse saved = service.create(EmployeeResponse.builder()
                 .name(req.name())
                 .email(req.email())
                 .role(req.role())
@@ -42,8 +42,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public Employee update(@PathVariable Long id, @Valid @RequestBody EmployeeRequest req) {
-        return service.update(id, Employee.builder()
+    public EmployeeResponse update(@PathVariable Long id, @Valid @RequestBody EmployeeRequest req) {
+        return service.update(id, EmployeeResponse.builder()
                 .name(req.name())
                 .email(req.email())
                 .role(req.role())
