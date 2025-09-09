@@ -1,8 +1,6 @@
 # Spring Boot CRUD (H2) — Java 21
 
-A minimal, production-grade Spring Boot CRUD REST API using **Java 21**, **Spring Boot 4.0.0-M2** (milestone), **Maven**, and **H2** in‑memory database.
-
-> ✅ If you prefer a stable release, change the parent version in `pom.xml` to `3.4.9` and remove the `spring-milestones` repository. Everything else is the same.
+A minimal, production-grade Spring Boot CRUD REST API using **Java 21**, **Spring Boot 3.4.9**, **Maven**, and **H2** in‑memory database.
 
 ## Quick Start
 
@@ -33,12 +31,12 @@ H2 Console: `http://localhost:8080/h2-console` (JDBC URL: `jdbc:h2:mem:demo`, us
 ```
 src/main/java/com/example/employees
 ├─ SpringBootCrudH2Application.java
-├─ model/Employee.java
+├─ model
+    |- EmployeeResponse.java
+     - EmployeeRequest.java
 ├─ repository/EmployeeRepository.java
 ├─ service/EmployeeService.java
-└─ web
-   ├─ dto/EmployeeRequest.java
-   └─ EmployeeController.java
+└─ Controller/ EmployeeController.java
 ```
 
 ## Notes
