@@ -27,8 +27,6 @@ API:
 H2 Console: `http://localhost:8080/h2-console` (JDBC URL: `jdbc:h2:mem:demo`, user: `sa`, password empty).
 
 ## Project Structure
-
-```
 src/main/java/com/example/employees
 ├─ SpringBootCrudH2Application.java
 ├─ model
@@ -37,12 +35,4 @@ src/main/java/com/example/employees
 ├─ repository/EmployeeRepository.java
 ├─ service/EmployeeService.java
 └─ Controller/ EmployeeController.java
-```
 
-## Notes
-
-- Uses Lombok **1.18.40** to avoid `IllegalAccessError` issues on newer JDKs.
-- `maven-compiler-plugin` is set to **3.14.0** with `release=21`.
-- Database is in-memory; change `application.properties` if you want persistent storage.
-# spring-boot-curd-operations
-# spring-boot-crud-h2
