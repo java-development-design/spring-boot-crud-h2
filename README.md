@@ -19,7 +19,7 @@ java -jar target/spring-boot-crud-h2-0.0.1-SNAPSHOT.jar
 API:
 - `GET    /api/employees`
 - `GET    /api/employees/{id}`
-- `POST   /api/employees` (JSON body: `{ "name": "...", "email": "...", "role": "..." }`)
+- `POST   /api/employees/save` (JSON body: `{ "name": "...", "email": "...", "role": "..." }`)
 - `PUT    /api/employees/{id}`
 - `DELETE /api/employees/{id}`
 
