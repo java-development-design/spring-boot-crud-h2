@@ -17,32 +17,32 @@ public class EmployeeService {
         this.repository = repository;
     }
 
-    public List<EmployeeResponse> findAll() {
+    public List<EmployeeResponse> findAllEmployees() {
         return repository.findAll();
     }
 
-    public EmployeeResponse findById(Long id) {
+    public EmployeeResponse findByEmployeeId(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
     }
 
-    public EmployeeResponse create(EmployeeResponse employee) {
+    public EmployeeResponse saveEmployees(EmployeeResponse employee) {
         repository.findByEmail(employee.getEmail()).ifPresent(e -> {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
         });
         return repository.save(employee);
     }
 
-    public EmployeeResponse update(Long id, EmployeeResponse data) {
-        EmployeeResponse existing = findById(id);
+    public EmployeeResponse updateEmployeeById(Long id, EmployeeResponse data) {
+        EmployeeResponse existing = findByEmployeeId(id);
         existing.setName(data.getName());
         existing.setEmail(data.getEmail());
         existing.setRole(data.getRole());
         return repository.save(existing);
     }
 
-    public void delete(Long id) {
-        EmployeeResponse existing = findById(id);
+    public void deleteEmployeeById(Long id) {
+        EmployeeResponse existing = findByEmployeeId(id);
         repository.delete(existing);
     }
 }

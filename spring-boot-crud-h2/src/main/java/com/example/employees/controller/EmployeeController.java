@@ -22,18 +22,18 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public List<EmployeeResponse> all() {
-        return service.findAll();
+    public List<EmployeeResponse> getEmployeeList() {
+        return service.findAllEmployees();
     }
 
     @GetMapping("/{id}")
-    public EmployeeResponse byId(@PathVariable Long id) {
-        return service.findById(id);
+    public EmployeeResponse getEmployeeById(@PathVariable Long id) {
+        return service.findByEmployeeId(id);
     }
 
-    @PostMapping
-    public ResponseEntity<EmployeeResponse> create(@Valid @RequestBody EmployeeRequest req) {
-        EmployeeResponse saved = service.create(EmployeeResponse.builder()
+    @PostMapping("/save")
+    public ResponseEntity<EmployeeResponse> saveEmployeeDetails(@Valid @RequestBody EmployeeRequest req) {
+        EmployeeResponse saved = service.saveEmployees(EmployeeResponse.builder()
                 .name(req.name())
                 .email(req.email())
                 .role(req.role())
@@ -42,8 +42,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public EmployeeResponse update(@PathVariable Long id, @Valid @RequestBody EmployeeRequest req) {
-        return service.update(id, EmployeeResponse.builder()
+    public EmployeeResponse updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeRequest req) {
+        return service.updateEmployeeById(id, EmployeeResponse.builder()
                 .name(req.name())
                 .email(req.email())
                 .role(req.role())
@@ -52,7 +52,7 @@ public class EmployeeController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
+    public void deleteEmployeeById(@PathVariable Long id) {
+        service.deleteEmployeeById(id);
     }
 }
