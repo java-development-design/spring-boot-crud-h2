@@ -13,7 +13,6 @@ Run:
 ```bash
 mvn spring-boot:run
 # or build a jar
-mvn -q -DskipTests package
 java -jar target/spring-boot-crud-h2-0.0.1-SNAPSHOT.jar
 ```
 
