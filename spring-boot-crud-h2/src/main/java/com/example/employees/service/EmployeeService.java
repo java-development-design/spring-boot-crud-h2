@@ -1,5 +1,8 @@
 package com.example.employees.service;
 
+import com.example.employees.entity.Employee;
+import com.example.employees.mapper.EmployeeMapper;
+import com.example.employees.model.EmployeeRequest;
 import com.example.employees.model.EmployeeResponse;
 import com.example.employees.repository.EmployeeRepository;
 import org.springframework.http.HttpStatus;
@@ -18,31 +21,45 @@ public class EmployeeService {
     }
 
     public List<EmployeeResponse> findAllEmployees() {
-        return repository.findAll();
+
+        return repository.findAll().stream()
+                .map(EmployeeMapper::toResponse)
+                .toList();
     }
 
     public EmployeeResponse findByEmployeeId(Long id) {
-        return repository.findById(id)
+        Employee  response = repository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Employee not found"));
+
+        return EmployeeMapper.toResponse(response);
     }
 
-    public EmployeeResponse saveEmployees(EmployeeResponse employee) {
+    public Employee saveEmployees(Employee employee) {
         repository.findByEmail(employee.getEmail()).ifPresent(e -> {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
         });
         return repository.save(employee);
     }
 
-    public EmployeeResponse updateEmployeeById(Long id, EmployeeResponse data) {
-        EmployeeResponse existing = findByEmployeeId(id);
+    public EmployeeResponse updateEmployeeById(Long id, EmployeeRequest data) {
+        Employee existing = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
+
         existing.setName(data.getName());
         existing.setEmail(data.getEmail());
         existing.setRole(data.getRole());
-        return repository.save(existing);
+
+        Employee updated = repository.save(existing);
+        return EmployeeMapper.toResponse(updated);
+
     }
 
     public void deleteEmployeeById(Long id) {
-        EmployeeResponse existing = findByEmployeeId(id);
-        repository.delete(existing);
+        Employee employee = repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Employee not found"
+                ));
+
+        repository.delete(employee);
     }
 }

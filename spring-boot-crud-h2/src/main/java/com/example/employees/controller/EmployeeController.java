@@ -1,5 +1,7 @@
 package com.example.employees.controller;
 
+import com.example.employees.entity.Employee;
+import com.example.employees.mapper.EmployeeMapper;
 import com.example.employees.model.EmployeeResponse;
 import com.example.employees.service.EmployeeService;
 import com.example.employees.model.EmployeeRequest;
@@ -32,22 +34,19 @@ public class EmployeeController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<EmployeeResponse> saveEmployeeDetails(@Valid @RequestBody EmployeeRequest req) {
-        EmployeeResponse saved = service.saveEmployees(EmployeeResponse.builder()
-                .name(req.name())
-                .email(req.email())
-                .role(req.role())
+    public ResponseEntity<EmployeeResponse> saveEmployeeData(@Valid @RequestBody EmployeeRequest req) {
+        Employee saved = service.saveEmployees(Employee.builder()
+                .name(req.getName())
+                .email(req.getEmail())
+                .role(req.getRole())
                 .build());
-        return ResponseEntity.created(URI.create("/api/employees/" + saved.getId())).body(saved);
+        return ResponseEntity.created(URI.create("/api/employees/" + saved.getId())).body(EmployeeMapper.toResponse(saved));
     }
 
     @PutMapping("/{id}")
     public EmployeeResponse updateEmployee(@PathVariable Long id, @Valid @RequestBody EmployeeRequest req) {
-        return service.updateEmployeeById(id, EmployeeResponse.builder()
-                .name(req.name())
-                .email(req.email())
-                .role(req.role())
-                .build());
+        return service.updateEmployeeById(id,req);
+
     }
 
     @DeleteMapping("/{id}")
