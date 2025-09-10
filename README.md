@@ -26,13 +26,3 @@ API:
 
 H2 Console: `http://localhost:8080/h2-console` (JDBC URL: `jdbc:h2:mem:demo`, user: `sa`, password empty).
 
-## Project Structure
-src/main/java/com/example/employees
-├─ SpringBootCrudH2Application.java
-├─ model
-    |- EmployeeResponse.java
-     - EmployeeRequest.java
-├─ repository/EmployeeRepository.java
-├─ service/EmployeeService.java
-└─ Controller/ EmployeeController.java
-
